@@ -63,3 +63,29 @@ nav.addEventListener('click', (e) => {
     targetSection.scrollIntoView({behavior: 'smooth'});
   };
 });
+
+//tabs
+
+const tabsContainer = document.querySelector('.operations__tab-container'),
+      tabs = document.querySelectorAll('.operations__tab'),
+      tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  const target = e.target;
+
+  if (target && target.classList.contains('operations__tab')) {
+    tabsContent.forEach(content => {
+      content.classList.remove('operations__content--active');
+    });
+    
+    tabs.forEach((tab, i) => {
+      tab.classList.remove('operations__tab--active');
+      if (tab === target) {
+        tab.classList.add('operations__tab--active');
+        tabsContent[i].classList.add('operations__content--active');
+        }   
+    });
+  };
+});
