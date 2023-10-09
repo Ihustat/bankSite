@@ -36,11 +36,30 @@ const btnScrollTo = document.querySelector('.btn--scroll-to'),
       section1 = document.querySelector('#section--1');
 
 btnScrollTo.addEventListener('click', (e) => {
-  const section1Coords = section1.getBoundingClientRect();
+  //old approach
 
-  window.scrollTo({
-    left: section1Coords.left, 
-    top:section1Coords.top + window.scrollY,
-    behavior: 'smooth'
-  });
+  // const section1Coords = section1.getBoundingClientRect();
+
+  // window.scrollTo({
+  //   left: section1Coords.left, 
+  //   top:section1Coords.top + window.scrollY,
+  //   behavior: 'smooth'
+  // });
+
+  section1.scrollIntoView({behavior: 'smooth'});
+});
+
+//section navigation
+
+const nav = document.querySelector('.nav');
+
+nav.addEventListener('click', (e) => {
+  e.preventDefault();
+  const target = e.target;
+
+  if (target && target.classList.contains('nav__link')) {
+    const targetSection = document.querySelector(`${target.getAttribute('href')}`);
+
+    targetSection.scrollIntoView({behavior: 'smooth'});
+  };
 });
