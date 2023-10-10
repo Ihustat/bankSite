@@ -76,16 +76,40 @@ tabsContainer.addEventListener('click', (e) => {
   const target = e.target;
 
   if (target && target.classList.contains('operations__tab')) {
+
     tabsContent.forEach(content => {
       content.classList.remove('operations__content--active');
     });
-    
+
     tabs.forEach((tab, i) => {
       tab.classList.remove('operations__tab--active');
+
       if (tab === target) {
         tab.classList.add('operations__tab--active');
         tabsContent[i].classList.add('operations__content--active');
-        }   
+        };   
+        
     });
   };
+});
+
+//fade animaation on nav
+
+const navLinksContainer = document.querySelector('.nav__links'),
+      navLinks = document.querySelectorAll('.nav__link');
+
+navLinksContainer.addEventListener('mouseover', (e) => {
+  const target = e.target;
+
+  if (target && target.classList.contains('nav__link')) {
+    navLinks.forEach(link => {
+      link.style.opacity = 0.5;
+
+      if (link === target) link.style.opacity = 1;
+    });
+  };
+});
+
+navLinksContainer.addEventListener('mouseout', () => {
+  navLinks.forEach(link => link.style.opacity = 1);
 });
