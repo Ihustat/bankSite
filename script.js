@@ -93,7 +93,7 @@ tabsContainer.addEventListener('click', (e) => {
   };
 });
 
-//fade animaation on nav
+//hover animation on nav
 
 const navLinksContainer = document.querySelector('.nav__links'),
       navLinks = document.querySelectorAll('.nav__link');
@@ -113,3 +113,26 @@ navLinksContainer.addEventListener('mouseover', (e) => {
 navLinksContainer.addEventListener('mouseout', () => {
   navLinks.forEach(link => link.style.opacity = 1);
 });
+
+//sticky nav
+
+const header = document.querySelector('.header');
+
+const headerObserverCallback = function(entries) {
+  const entry = entries[0];
+
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  };
+};
+
+const headerObserverOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: '-100px'
+};
+
+const headerObserver = new IntersectionObserver(headerObserverCallback, headerObserverOptions);
+headerObserver.observe(header);
