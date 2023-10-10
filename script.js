@@ -136,3 +136,28 @@ const headerObserverOptions = {
 
 const headerObserver = new IntersectionObserver(headerObserverCallback, headerObserverOptions);
 headerObserver.observe(header);
+
+//show sections by scroll
+
+const sections = document.querySelectorAll('.section');
+
+const sectionsObserverCallback = function(entries, observer) {
+  const entry = entries[0];
+
+  if (entry.isIntersecting) entry.target.classList.remove('section--hidden');
+
+  observer.unobserve(entry.target);
+};
+
+const sectionsObserverOptions = {
+  root: null,
+  threshold: 0.1,
+};
+
+const sectionsOberver = new IntersectionObserver(sectionsObserverCallback, sectionsObserverOptions);
+
+sections.forEach(section => {
+  section.classList.add('section--hidden');
+
+  sectionsOberver.observe(section);
+});
