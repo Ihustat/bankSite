@@ -186,3 +186,83 @@ const lazyImagesOptions = {
 const lazyImagesObserver = new IntersectionObserver(lazyImagesCallback, lazyImagesOptions);
 
 lazyImages.forEach(img => lazyImagesObserver.observe(img));
+
+//slider
+
+const slides = document.querySelectorAll('.slide'),
+      btnLeft = document.querySelector('.slider__btn--left'),
+      btnRight = document.querySelector('.slider__btn--right'),
+      dotsContainer = document.querySelector('.dots');
+
+let currentSlide = 0;
+
+function createDots() {
+  slides.forEach((_,i) => {
+    dotsContainer.insertAdjacentHTML('beforeend',
+     `<button class="dots__dot" data-slide="${i}"></button>
+     `);
+  });
+};
+
+function activeDot(i) {
+  document.querySelectorAll('.dots__dot').forEach(dot => {
+    dot.classList.remove('dots__dot--active');
+  });
+
+  document.querySelector(`.dots__dot[data-slide="${i}"]`).classList.add('dots__dot--active');
+};
+
+createDots();
+
+function moveToSlide(slide = 0) {
+    slides.forEach((s, i) => {
+    s.style.transform = `translateX(${100 * (i - slide)}%)`;
+  });
+};
+
+function nextSlide() {
+  if (currentSlide === slides.length - 1) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+  };
+
+  moveToSlide(currentSlide);
+  activeDot(currentSlide);
+};
+
+function prevSlide() {
+  if (currentSlide === 0) {
+    currentSlide = slides.length - 1;
+  } else {
+    currentSlide--;
+  };
+
+  moveToSlide(currentSlide);
+  activeDot(currentSlide);
+};
+
+moveToSlide();
+activeDot(0);
+
+btnRight.addEventListener('click', nextSlide);
+
+btnLeft.addEventListener('click', prevSlide);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+});
+
+dotsContainer.addEventListener('click', (e) => {
+  const target = e.target;
+
+  if (target && target.classList.contains('dots__dot'))  {
+    const slideIndex = target.dataset.slide;
+
+    currentSlide = slideIndex;
+
+    moveToSlide(slideIndex);
+    activeDot(slideIndex);
+  };
+});
